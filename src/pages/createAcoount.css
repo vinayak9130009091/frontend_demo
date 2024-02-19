@@ -1,0 +1,246 @@
+/* .............................................................. */
+.account-container {
+  position: fixed;
+  top: 0;
+  right: -66.66%;
+  /* width: 83.33%; */
+  height: 100%;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: right 0.5s ease-in-out;
+}
+
+.form-open {
+  right: 0;
+}
+
+.account-container .header {
+  display: flex;
+  flex: 0;
+  align-items: center;
+  padding: 16px 24px;
+
+  font-size: 16px;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+}
+.account-container .header_title {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+.header_title button {
+  display: inline-block;
+  margin-inline-end: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 600;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 1;
+  text-align: center;
+  text-transform: none;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-rendering: auto;
+}
+/* ....account... */
+
+.account-container2 {
+  box-shadow: 5px 5px 5px rgb(184, 185, 185);
+  height: auto;
+  flex-direction: column;
+}
+
+.account-header {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  background: rgb(243, 243, 243);
+}
+
+.account-header .account_title {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: sans-serif;
+  width: 85%;
+  float: left;
+  cursor: pointer;
+}
+
+.account-header .header-button {
+  background: none;
+  color: rgb(58, 145, 245);
+  border: none;
+  width: 15%;
+  float: left;
+  cursor: pointer;
+}
+
+.account_type {
+  height: auto;
+  flex-direction: row;
+}
+
+.accounttype_container {
+  display: flex;
+  justify-content: center;
+}
+
+.sub-account {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: space-between;
+  height: 30%;
+}
+
+.account_info {
+  flex-direction: column;
+  display: flex;
+  font-family: sans-serif;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.account_info input[type="radio"] {
+  cursor: pointer;
+}
+
+.rotate-btn {
+  border: none;
+  background: none;
+  color: rgb(121, 116, 116);
+  cursor: pointer;
+  padding-top: 5%;
+}
+
+.company_info {
+  flex-direction: column;
+  display: flex;
+  gap: 2px;
+  font-family: sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.company_info input[type="radio"] {
+  cursor: pointer;
+}
+
+.clienttype_container {
+  height: auto;
+  flex-direction: column;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.accountsub_type {
+  display: flex;
+}
+
+.type1_individual .companysub_type {
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.type1_individual input[type="radio"] {
+  cursor: pointer;
+}
+
+.individual_input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  /* background-color:beige; */
+  height: auto;
+}
+
+.form-accountinfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 5px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="continue"] {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0054ad;
+}
+
+@media screen and (max-width: 480px) {
+  .sub-account {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .account_info {
+    margin-bottom: 10px;
+  }
+
+  .rotate-btn {
+    padding-top: 5%;
+  }
+}
+
+.account_info input[type="radio"] {
+  cursor: pointer;
+}
+
+.rotate-btn {
+  border: none;
+  background: none;
+  color: rgb(121, 116, 116);
+  cursor: pointer;
+  padding-top: 5%;
+}
+
+.company_info {
+  flex-direction: column;
+  display: flex;
+  gap: 2px;
+  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+  font-size: 15px;
+  cursor: pointer;
+}
+.company_info input[type="radio"] {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  .sub-account {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .account_info {
+    margin-bottom: 10px;
+  }
+
+  .rotate-btn {
+    padding-top: 5%;
+  }
+}
