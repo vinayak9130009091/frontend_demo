@@ -1,23 +1,16 @@
 import React from "react";
 import Select from "react-select";
 
-function Tag({ addTag }) {
+function AddTeamMember({addTeamMember}) {
   const options = [
-    { _id: "65d4a1df12be2f5b24cb70c1", value: "Gray", label: "Gray", color: "#808080" },
-    { _id: "65d4a1df12be2f5b24cb70c1", value: "Demo", label: "Gray", color: "#808080" },
-    { _id: "65d4a1df12be2f5b24cb70c1", value: "Gray", label: "Gray", color: "#808080" },
-    { _id: "65d4a1df12be2f5b24cb70c1", value: "Gray", label: "Gray", color: "#808080" },
-    // { value: "Red", label: "Red", color: "#EE4B2B" },
-    // { value: "Orange", label: "Orange", color: "#FFAC1C" },
-    // { value: "Lime", label: "Lime", color: "#32CD32" },
-    // { value: "Green", label: "Green", color: "#008000" },
-    // { value: "Blue", label: "Blue", color: "#0000FF" },
-    // { value: "Purple", label: "Purple", color: "#BF40BF" },
-    // { value: "Pink", label: "Pink", color: "#F72798" },
+    { value: "Vinayak", label: "Vinayak", color: "#808080" },
+    { value: "Rohit", label: "Rohit", color: "#808080" },
+    { value: "Radhika", label: "Radhika", color: "#808080" },
+    { value: "Deepika", label: "Deepika", color: "#808080" },
   ];
   const handleChange = (selectedOption) => {
     //console.log("handledChange", selectedOption);
-    addTag(selectedOption);
+    addTeamMember(selectedOption);
   };
   const colorStyles = {
     control: (styles) => ({ ...styles, backgroundColor: "white" }),
@@ -39,8 +32,7 @@ function Tag({ addTag }) {
     multiValueLabel: (styles, { data }) => {
       return {
         ...styles,
-
-        borderRadius: 25,
+        //backgroundColor: data.color,
         color: "#fff",
       };
     },
@@ -60,4 +52,4 @@ function Tag({ addTag }) {
   return <Select options={options} onChange={handleChange} isMulti styles={colorStyles} />;
 }
 
-export default Tag;
+export default AddTeamMember;

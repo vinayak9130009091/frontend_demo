@@ -1,51 +1,5 @@
-.header_title .title {
-  /* border: 1px solid black; */
-  margin-top: 15px;
-}
-.form-container .c-contact {
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-
-  height: auto;
-  padding: 10px;
-}
-.form-container .company-contact {
-  align-items: center;
-  margin: 0 auto;
-  /* border: 1px solid black; */
-  padding: 10px;
-}
-
-.company-contact .name-container {
-  /* border: 1px solid blueviolet; */
-  height: 90px;
-}
-.name-container label {
-  margin: 10px;
-  font-size: 16px;
-}
-.name-container input[type="text"],
-input[type="email"] {
-  height: 48px;
-  border-radius: 15px;
-  border: none;
-  margin-top: 5px;
-  padding: 15px;
-  font-size: 15px;
-  background-color: #eef1f4;
-}
-
-.company-contact .submit-btn {
-  /* margin-left: 30%; */
-  padding: 8px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  background: #007bff;
-}
-
-.form-container {
-  position: fixed;
+.contact-container {
+  position: absolute;
   top: 0;
   right: -66.66%;
   height: 100%;
@@ -53,24 +7,42 @@ input[type="email"] {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   transition: right 0.5s ease-in-out;
+  padding: 15px;
 }
 
-.form-open {
+.contact-open {
   right: 0;
 }
 
-.form-container .header {
-  display: flex;
-  flex: 0;
-  align-items: center;
-  padding: 16px 24px;
-
-  font-size: 16px;
-  line-height: 1.5;
-  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
-}
-.form-container .header_title {
+.contact-container .header_title {
   display: flex;
   flex: 1;
   align-items: center;
 }
+.contact-container .header_title .title {
+  margin-top: 15px;
+}
+.name-container .input {
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
+  padding: 15px;
+  font-size: 15px;
+  background-color: #eef1f4;
+}
+.name-container .label {
+  color: rgb(33, 31, 31);
+  font-size: 15px;
+}
+.submit-btn {
+  padding: 8px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background: #007bff;
+  width: 20%;
+}
+
+/* //!input css */
