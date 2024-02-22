@@ -25,7 +25,7 @@ function Sidebar() {
   const [newsidebar, setNewSidebar] = useState(false);
   const [searchbar, setSearchbar] = useState(false);
   const [contactForm, setContactForm] = useState(false);
-  const [accountform, setAccountForm] = useState(false);
+  const [accountform, setAccountForm] = useState(true);
 
   const handleSidebar = () => {
     setMainSidebar(!mainSidebar);

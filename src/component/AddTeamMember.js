@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 
-function AddTeamMember({addTeamMember}) {
+function AddTeamMember({ addTeamMember }) {
   const options = [
     { value: "Vinayak", label: "Vinayak", color: "#808080" },
     { value: "Rohit", label: "Rohit", color: "#808080" },
