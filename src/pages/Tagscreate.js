@@ -12,7 +12,7 @@ const Tagcreate = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [options, setOptions] = useState([]);
 
-  const colors = ["#FF0000", "#00FFFF", "#0000FF", "#00008B", "#ADD8E6", "#800080", "#FFFF00", "#00FF00", "#FF00FF", "#FFC0CB", "#F72798", "#7FFFD4", "#808000", "#008000", "#800000", "#A52A2A", "#FFA500", "#000000", "#808080", "#C0C0C0"];
+  const colors = ["#EE4B2B", "#FFAC1C", "#32CD32", "#008000", "#0000FF", "#BF40BF", "#F72798"];
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);

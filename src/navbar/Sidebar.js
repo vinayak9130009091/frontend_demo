@@ -35,6 +35,7 @@ function Sidebar() {
   };
   const handleNewSidebar = () => {
     setNewSidebar(!newsidebar);
+    setSidebarOpen(false);
   };
   const handleSearchbar = () => {
     setSearchbar(!searchbar);

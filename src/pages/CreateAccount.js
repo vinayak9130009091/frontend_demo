@@ -95,22 +95,9 @@ function CreateAccount({ handleAddAccount }) {
   };
   //todo contact
 
-  const [contacts, setContacts] = useState([{ fname: "", mname: "", lname: "", contactName: "", companyName: "", note: "", email: "", phoneNumber: "", tags: "", country: "", streetAddress: "", city: "", stateProvince: "", zipPostalCode: "" }]);
+  const [contacts, setContacts] = useState([{ fname: "", mname: "", lname: "", contactName: "", companyName: "", note: "", email: "", phoneNumber: null, tags: null, country: "", streetAddress: "", city: "", stateProvince: "", zipPostalCode: null }]);
   const [submittedContacts, setSubmittedContacts] = useState([]);
-  const [fname, setFname] = useState("");
-  const [mname, setMname] = useState("");
-  const [lname, setLname] = useState("");
-  const [contactName, setContactName] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [note, setNote] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [tags, setTags] = useState("");
-  const [country, setCountry] = useState("");
-  const [streetAddress, setStreetAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [stateProvince, setStateProvince] = useState("");
-  const [zipPostalCode, setZipPostalCode] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleInputChange = (index, event) => {
     const newContacts = [...contacts];
@@ -118,8 +105,12 @@ function CreateAccount({ handleAddAccount }) {
     setContacts(newContacts);
   };
 
+  const handleCoctactAddTag = (selectedOption) => {
+    setAddTag(selectedOption);
+  };
+
   const handleAddContact = () => {
-    setContacts([...contacts, { fname: "", mname: "", lname: "", contactName: "", companyName: "", note: "", email: "", phoneNumber: "", tags: "", country: "", streetAddress: "", city: "", stateProvince: "", zipPostalCode: "" }]);
+    setContacts([...contacts, { fname: "", mname: "", lname: "", contactName: "", companyName: "", note: "", email: "", phoneNumber: null, tags: null, country: "", streetAddress: "", city: "", stateProvince: "", zipPostalCode: null }]);
   };
 
   const handleRemoveContact = (index) => {
@@ -130,8 +121,10 @@ function CreateAccount({ handleAddAccount }) {
 
   const handleSubmitContact = (index) => {
     const updatedSubmittedContacts = [...submittedContacts, contacts[index]];
+
     setSubmittedContacts(updatedSubmittedContacts);
-    setContacts([{ fname: "", mname: "", lname: "", contactName: "", companyName: "", note: "", email: "", phoneNumber: "", tags: "", country: "", streetAddress: "", city: "", stateProvince: "", zipPostalCode: "" }]);
+    setContacts([{ fname: "", mname: "", lname: "", contactName: "", companyName: "", note: "", email: "", phoneNumber: null, tags: null, country: "", streetAddress: "", city: "", stateProvince: "", zipPostalCode: null }]);
+    setFormSubmitted(true);
   };
 
   const handleRemoveSubmittedContact = (index) => {
@@ -141,25 +134,35 @@ function CreateAccount({ handleAddAccount }) {
   };
 
   const handleSendContact = (index) => {
+    handleRemoveSubmittedContact(index);
     // Log data before removing the contact
     console.log("Sending contact:", submittedContacts[index]);
-    setFname(fname);
-    setMname(mname);
-    setLname(lname);
-    setContactName(contactName);
-    setCompanyName(companyName);
-    setNote(note);
-    setEmail(email);
-    setPhoneNumber(phoneNumber);
-    setTags(tags);
-    setCountry(country);
-    setStreetAddress(streetAddress);
-    setCity(city);
-    setStateProvince(stateProvince);
-    setZipPostalCode(zipPostalCode);
 
-    // Remove the contact after logging
-    handleRemoveSubmittedContact(index);
+    let data = JSON.stringify(submittedContacts[index]);
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://127.0.0.1:8080/con",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleRoleChange = (index, selectedOption) => {
+    const newContacts = [...contacts];
+    newContacts[index].tags = selectedOption;
+    setContacts(newContacts);
   };
 
   const renderCurrentStage = () => {
@@ -278,136 +281,139 @@ function CreateAccount({ handleAddAccount }) {
       case 3:
         return (
           <div>
-            {submittedContacts.map((contact, index) => (
-              <div key={index}>
-                <p>Submitted Contact {index + 1}:</p>
-                <p>Name: {contact.name}</p>
-                <p>Email: {contact.email}</p>
-                <button type="button" onClick={() => handleRemoveSubmittedContact(index)}>
-                  Remove
-                </button>
-                <button type="button" onClick={() => handleSendContact(index)}>
-                  Send
-                </button>
-              </div>
-            ))}
-
-            <form>
-              {contacts.map((contact, index) => (
-                <div key={index}>
-                  <div className="dynamicContact" style={{ padding: "0 10px 0 10px" }}>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
-                      <h5>Info:</h5>
-                    </div>
-                    <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
-                      <label htmlFor={`fname${index}`}>First Name:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
-                      <label htmlFor={`fname${index}`}>Middle Name:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
-                      <label htmlFor={`fname${index}`}>Last Name:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
-                      <label htmlFor={`fname${index}`}>Contact Name:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
-                      <label htmlFor={`fname${index}`}>Company Name:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 10px 10px" }}>
-                      <label htmlFor={`fname${index}`}>Email:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="email" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className="btnSlide col-12" style={{ padding: "0 6% 0 10% " }}>
-                      <div className="col-2" style={{ width: "15%" }}>
-                        <SlideButton />
-                      </div>
-                      <div className=" col-2">
-                        <label style={{ fontSize: "12px", color: "black" }}>Login</label>
-                      </div>
-                      <div className="col-2" style={{ width: "15%" }}>
-                        <SlideButton />
-                      </div>
-                      <div className=" col-2">
-                        <label style={{ fontSize: "12px", color: "black" }}>Notify</label>
-                      </div>
-                      <div className="col-2" style={{ width: "15%" }}>
-                        <SlideButton />
-                      </div>
-                      <div className=" col-2">
-                        <label style={{ fontSize: "12px", color: "black" }}>Email Sync</label>
-                      </div>
-                    </div>
-
-                    <div className=" col-12" style={{ padding: "0 10px 10px 10px" }}>
-                      <label>Tags:</label>
-                      <Tag addTag={handleAddTag} />
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
-                      <h5>Phone Number</h5>
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
-                      <h5>Address:</h5>
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
-                      <label htmlFor={`fname${index}`}>Country:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
-                      <label htmlFor={`fname${index}`}>Street address:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
-                      <label htmlFor={`fname${index}`}>City:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
-                      <label htmlFor={`fname${index}`}>State/Province:</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
-                      <label htmlFor={`fname${index}`}>ZIP/Postal Code</label>
-                      <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
-                    </div>
-                    <div className=" col-12">
-                      <hr />
-                    </div>
+            {formSubmitted ? (
+              <div>
+                {submittedContacts.map((contact, index) => (
+                  <div key={index}>
+                    <p>Contact {index + 1}:</p>
+                    <p>Name: {contact.fname}</p>
+                    <p>Email: {contact.email}</p>
+                    <button className="submit-btn col-6" style={{ marginLeft: "10px" }} onClick={() => handleRemoveSubmittedContact(index)}>
+                      Remove
+                    </button>
+                    <button className="submit-btn col-6" style={{ marginLeft: "10px" }} onClick={() => handleSendContact(index)}>
+                      Send
+                    </button>
                   </div>
+                ))}
 
-                  {/* <div className=" col-12">
-                    <label htmlFor={`email${index}`}>Email:</label>
-                    <input type="text" name="email" id={`email${index}`} value={contact.email} onChange={(e) => handleInputChange(index, e)} />
-                  </div> */}
-
-                  {/* <button type="button" onClick={() => handleRemoveContact(index)}>
-                    Remove
-                  </button>
-
-                  <button type="button" onClick={() => handleSubmitContact(index)}>
-                    Submit Contact
-                  </button> */}
-                </div>
-              ))}
-
-              <div className=" col-12">
-                <div className="addContact" style={{ margin: "20px" }}>
-                  <div className=" col-1" style={{ color: "blue" }} onClick={handleAddContact}>
-                    <FaPlusCircle />
-                  </div>
-                  <div className=" col-11" style={{ margin: "-2px" }}>
-                    Add New Contact
+                <div className=" col-12">
+                  <div className="addContact" style={{ margin: "20px" }}>
+                    <div className=" col-1" style={{ color: "blue" }} onClick={() => setFormSubmitted(false)}>
+                      <FaPlusCircle />
+                    </div>
+                    <div className=" col-11" style={{ margin: "-2px" }}>
+                      Add New Contact
+                    </div>
                   </div>
                 </div>
               </div>
-            </form>
+            ) : (
+              <div>
+                <form>
+                  {contacts.map((contact, index) => (
+                    <div key={index}>
+                      <div className="dynamicContact" style={{ padding: "0 10px 0 10px" }}>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
+                          <h5>Info:</h5>
+                        </div>
+                        <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
+                          <label htmlFor={`fname${index}`}>First Name:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="fname" id={`fname${index}`} value={contact.fname} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
+                          <label htmlFor={`mname${index}`}>Middle Name:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="mname" id={`mname${index}`} value={contact.mname} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
+                          <label htmlFor={`lname${index}`}>Last Name:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="lname" id={`lname${index}`} value={contact.lname} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
+                          <label htmlFor={`contactName${index}`}>Contact Name:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="contactName" id={`contactName${index}`} value={contact.contactName} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
+                          <label htmlFor={`companyName${index}`}>Company Name:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="companyName" id={`companyName${index}`} value={contact.companyName} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
+                          <label htmlFor={`note${index}`}>Note:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="note" id={`note${index}`} value={contact.note} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 10px 10px" }}>
+                          <label htmlFor={`email${index}`}>Email:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="email" name="email" id={`email${index}`} value={contact.email} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className="btnSlide col-12" style={{ padding: "0 6% 0 10% " }}>
+                          <div className="col-2" style={{ width: "15%" }}>
+                            <SlideButton />
+                          </div>
+                          <div className=" col-2">
+                            <label style={{ fontSize: "12px", color: "black" }}>Login</label>
+                          </div>
+                          <div className="col-2" style={{ width: "15%" }}>
+                            <SlideButton />
+                          </div>
+                          <div className=" col-2">
+                            <label style={{ fontSize: "12px", color: "black" }}>Notify</label>
+                          </div>
+                          <div className="col-2" style={{ width: "15%" }}>
+                            <SlideButton />
+                          </div>
+                          <div className=" col-2">
+                            <label style={{ fontSize: "12px", color: "black" }}>Email Sync</label>
+                          </div>
+                        </div>
+
+                        <div className=" col-12" style={{ padding: "0 10px 10px 10px" }}>
+                          <label>Tags:</label>
+                          {/* <Tag addTag={handleAddTag} /> */}
+                          <label htmlFor={`role${index}`}>Role:</label>
+                          <Tag value={contact.tag} onChange={(selectedOption) => handleRoleChange(index, selectedOption)} />
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
+                          <h5>Phone Number</h5>
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="phoneNumber" id={`phoneNumber${index}`} value={contact.phoneNumber} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
+                          <h5>Address:</h5>
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
+                          <label htmlFor={`country${index}`}>Country:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="country" id={`country${index}`} value={contact.country} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-12" style={{ padding: "0 10px 0 10px " }}>
+                          <label htmlFor={`streetAddress${index}`}>Street address:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="streetAddress" id={`streetAddress${index}`} value={contact.streetAddress} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
+                          <label htmlFor={`city${index}`}>City:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="city" id={`city${index}`} value={contact.city} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
+                          <label htmlFor={`stateProvince${index}`}>State/Province:</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="text" name="stateProvince" id={`stateProvince${index}`} value={contact.stateProvince} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-4" style={{ padding: "0 10px 0 10px" }}>
+                          <label htmlFor={`zipPostalCode${index}`}>ZIP/Postal Code</label>
+                          <input style={{ display: "flex" }} className="col-4 input" type="number" name="zipPostalCode" id={`zipPostalCode${index}`} value={contact.zipPostalCode} onChange={(e) => handleInputChange(index, e)} />
+                        </div>
+                        <div className=" col-12">
+                          <hr />
+                        </div>
+                      </div>
+
+                      <button className="submit-btn col-6" style={{ marginLeft: "10px" }} onClick={() => handleSubmitContact(index)}>
+                        Submit
+                      </button>
+                    </div>
+                  ))}
+                </form>
+              </div>
+            )}
           </div>
         );
       default:

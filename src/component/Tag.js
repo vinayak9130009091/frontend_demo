@@ -63,7 +63,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-const Tag = () => {
+const Tag = ({ value, onChange }) => {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const animatedComponents = makeAnimated();
@@ -91,11 +91,12 @@ const Tag = () => {
       backgroundColor: tag.tagColour,
       color: "#fff",
       borderRadius: "12px",
-      width: "120px",
+      width: "100px",
       alignItems: "center",
       textAlign: "center",
       marginBottom: "5px",
-      height: "35px",
+      height: "30px",
+      fontSize: 12,
     },
   }));
 
@@ -109,6 +110,7 @@ const Tag = () => {
       textAlign: state.data.customStyle.textAlign,
       marginBottom: state.data.customStyle.marginBottom,
       height: state.data.customStyle.height,
+      fontSize: 12,
     }),
     multiValue: (provided, state) => ({
       ...provided,
@@ -117,6 +119,7 @@ const Tag = () => {
       borderRadius: state.data.customStyle.borderRadius,
       width: state.data.customStyle.width,
       textAlign: state.data.customStyle.textAlign,
+      fontSize: 13,
     }),
     multiValueLabel: (provided, state) => ({
       ...provided,
@@ -125,6 +128,18 @@ const Tag = () => {
       width: state.data.customStyle.width,
       textAlign: state.data.customStyle.textAlign,
     }),
+
+    multiValueRemove: (styles, { data }) => {
+      return {
+        ...styles,
+
+        color: "#fff",
+        cursor: "pointer",
+        ":hover": {
+          color: "#fff",
+        },
+      };
+    },
   };
 
   const handleTagChange = (selectedOptions) => {
@@ -138,8 +153,8 @@ const Tag = () => {
         options={options}
         components={animatedComponents}
         isMulti // Enable multi-select
-        value={selectedTags}
-        onChange={handleTagChange}
+        value={value}
+        onChange={onChange}
         placeholder="Select tags..."
         isSearchable // Enable search
         styles={customStyles}
