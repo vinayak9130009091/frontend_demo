@@ -12,12 +12,12 @@ import { RxCross2 } from "react-icons/rx";
 import { SlArrowLeft, SlArrowRight, SlQuestion } from "react-icons/sl";
 //?icon stage 2
 import { useNavigation } from "react";
-import { FaCirclePlus } from "react-icons/fa6";
-import { SlNotebook } from "react-icons/sl";
+
 import { FaPlusCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function CreateAccount({ handleAddAccount }) {
-  const [currentStage, setCurrentStage] = useState(3);
+  const [currentStage, setCurrentStage] = useState(1);
 
   const nextStage = () => {
     setCurrentStage((prevStage) => prevStage + 1);
@@ -35,11 +35,36 @@ function CreateAccount({ handleAddAccount }) {
     setFormStage(option);
   };
   //todo stage individual
-  const [clientType, setClientType] = useState("individual", "company");
+  const [clientType, setClientType] = useState("Individual");
   const [accountName, setAccountName] = useState("");
   const [addTag, setAddTag] = useState(null);
   const [teamMember, SetTeamMember] = useState("");
   const [folderTemplate, SetFolderTemplate] = useState("");
+  const [cCountry, SetCCountry] = useState("");
+  const [cStreetAddress, SetCStreetAddress] = useState("");
+  const [cStateProvince, SetCStateProvince] = useState("");
+  const [cZipPostalCode, SetCZipPostalCode] = useState("");
+
+  const [isIndividualEnabled, setIsIndividualEnabled] = useState(true);
+  const [isCompanyEnabled, setIsCompanyEnabled] = useState(false);
+  const navigate = useNavigate();
+
+  const handleContentCheckboxChange = () => {
+    setIsIndividualEnabled(!isIndividualEnabled);
+    // Reset the state of the other checkbox when this one is checked
+
+    setClientType("Company");
+    setIsCompanyEnabled(false);
+  };
+
+  const handleCompanyCheckboxChange = () => {
+    setIsCompanyEnabled(!isCompanyEnabled);
+    // Reset the state of the other checkbox when this one is checked
+    setIsIndividualEnabled(false);
+
+    setClientType("Individual");
+  };
+
   const handleClientTypeChange = (type) => {
     setClientType(type);
   };
@@ -55,22 +80,24 @@ function CreateAccount({ handleAddAccount }) {
   const handleAddFolderTemplate = (selectedOption) => {
     SetFolderTemplate(selectedOption);
   };
-  useEffect(() => {
-    console.log(accountName);
-    console.log(addTag);
-    console.log(teamMember);
-    console.log(folderTemplate);
-  }, [accountName, addTag, folderTemplate, teamMember]);
+ 
 
   //todo handle submit
   const handleSubmit = () => {
+    nextStage();
+    nextStage();
     let data = JSON.stringify({
-      clientType: "i",
-      accountName: "Seema Datta",
-      companyName: "Microtech Solutions",
+      clientType: clientType,
+      accountName: accountName,
+      companyName: accountName,
       tags: addTag,
       teamMembers: teamMember,
       folderTemplate: folderTemplate,
+      country: cCountry,
+      streetAddress: cStreetAddress,
+      stateProvince: cStateProvince,
+      zipPostalCode: cZipPostalCode,
+
       active: true,
     });
 
@@ -107,6 +134,13 @@ function CreateAccount({ handleAddAccount }) {
 
   const handleCoctactAddTag = (selectedOption) => {
     setAddTag(selectedOption);
+  };
+
+  const createAddAccouunt = () => {
+    setCurrentStage(1);
+    handleAddAccount();
+    setSubmittedContacts([]);
+    setContacts([...contacts, { fname: "", mname: "", lname: "", contactName: "", companyName: "", note: "", email: "", phoneNumber: null, tags: null, country: "", streetAddress: "", city: "", stateProvince: "", zipPostalCode: null }]);
   };
 
   const handleAddContact = () => {
@@ -164,45 +198,13 @@ function CreateAccount({ handleAddAccount }) {
     newContacts[index].tags = selectedOption;
     setContacts(newContacts);
   };
+  const handleRefresh = () => {
+    window.location.reload();
+  };
 
   const renderCurrentStage = () => {
     switch (currentStage) {
       case 1:
-        return (
-          <div className="createContact">
-            <h3 style={{ fontSize: "14px", fontFamily: "sans-serif", fontWeight: "600", color: "rgb(121, 116, 116)", marginLeft: "2%" }}>
-              Conatcts <SlQuestion style={{ color: "#007bff", fontSize: "12px", verticalAlign: "top", paddingLeft: "2px" }} />
-            </h3>
-
-            <div className="last_section col-12">
-              <div className="middle-section-container col-12">
-                <div className="icon-section col-12">
-                  <SlNotebook style={{ width: "50px", height: "50px", color: "#b7b7b7", marginLeft: "40%" }} />
-                  <div className="icon_info" style={{ display: "flex", alignItems: "center", fontSize: "14px", fontFamily: "sans-serif", color: "rgb(121, 116, 116)", marginLeft: "35%" }}>
-                    <h5>No linked contacts</h5>
-                    <br />
-                  </div>
-                  <div className="csub-account-last col-12" style={{ marginTop: "20%" }}>
-                    <div className="contact_info-last" style={{ display: "flex", alignItems: "center" }}>
-                      <FaCirclePlus />
-                      <label htmlFor="account_info_radio" style={{ marginLeft: "5px", fontSize: "14px", fontFamily: "sans-serif", fontWeight: "600", color: "rgb(58, 145, 245)" }}>
-                        Link existing account
-                      </label>
-                    </div>
-
-                    <div className="contact_info-last" style={{ display: "flex", alignItems: "center" }}>
-                      <FaCirclePlus />
-                      <label htmlFor="company_info_radio" style={{ marginLeft: "5px", fontSize: "14px", fontFamily: "sans-serif", fontWeight: "600", color: "rgb(58, 145, 245)" }}>
-                        Add new contacts
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 2:
         return (
           <>
             <div className="individual">
@@ -219,63 +221,143 @@ function CreateAccount({ handleAddAccount }) {
 
                   <div className="account_subtype">
                     <div className="individual_subtype">
-                      <input type="radio" id="individual_radio" name="client_type" checked={clientType === "individual"} onChange={() => handleClientTypeChange("individual")} />
-                      <label htmlFor="individual_radio" style={{ fontSize: "14px", fontFamily: "sans-serif", marginLeft: "5px" }}>
+                      <label htmlFor="company_radio" style={{ fontSize: "14px", fontFamily: "sans-serif", marginLeft: "5px" }}>
+                        <input type="checkbox" checked={isIndividualEnabled} onChange={handleContentCheckboxChange} style={{ marginRight: "10px" }} />
                         Individual
                       </label>
                     </div>
 
                     <div className="company_subtype" style={{ marginLeft: "20px" }}>
-                      <input type="radio" id="company_radio" name="client_type" checked={clientType === "company"} onChange={() => handleClientTypeChange("company")} />
-                      <label htmlFor="company_radio" style={{ fontSize: "14px", fontFamily: "sans-serif", marginLeft: "5px" }}>
+                      <label htmlFor="company_radio" style={{ fontSize: "14px", fontFamily: "sans-serif", marginLeft: "10px" }}>
+                        <input type="checkbox" checked={isCompanyEnabled} onChange={handleCompanyCheckboxChange} style={{ marginRight: "10px" }} />
                         Company
                       </label>
                     </div>
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="individualInfo" style={{ padding: "15px" }}>
-                  <div>
+              <div></div>
+            </div>
+            <div>
+              <br />
+
+              {isIndividualEnabled && (
+                <div>
+                  {/* Content form */}
+                  <div className="individualInfo" style={{ padding: "15px" }}>
                     <div>
-                      <h3 style={{ fontSize: "14px", fontFamily: "sans-serif", fontWeight: "600", color: "gray" }}>Account Info</h3>
+                      <div>
+                        <h3 style={{ fontSize: "14px", fontFamily: "sans-serif", fontWeight: "600", color: "gray" }}>Account Info</h3>
+                      </div>
+                      <div style={{ marginLeft: "90px", marginTop: "-20px", color: "blue" }}>
+                        <SlQuestion />
+                      </div>
                     </div>
-                    <div style={{ marginLeft: "90px", marginTop: "-20px", color: "blue" }}>
-                      <SlQuestion />
+
+                    <div>
+                      <label className="label">Account Name:</label>
+                      <input className="col-12 input" type="text" name="name" placeholder="first name" onChange={handleAccountName} />
                     </div>
-                  </div>
 
-                  <div>
-                    <label className="label">Account Name:</label>
-                    <input className="col-12 input" type="text" name="name" placeholder="first name" onChange={handleAccountName} />
-                  </div>
-
-                  <div>
-                    <label className="label">Tags:</label>
-                    <Tag addTag={handleAddTag} />
-                  </div>
-                  <div>
-                    <label className="label">Team Member:</label>
-                    <TeamMember addTeamMember={handleAddTeamMember} />
-                  </div>
-                  <div>
-                    <label className="label">Folder Template :</label>
-                    <AddFolderTemplate addFolderTemplate={handleAddFolderTemplate} />
-                  </div>
-                  <div>
-                    <button
-                      className="submit-btn col-6"
-                      onClick={() => {
-                        handleSubmit();
-                        handleFormStage("stage2");
-                      }}
-                    >
-                      Submit
-                    </button>
+                    <div>
+                      <label className="label">Tags:</label>
+                      <Tag addTag={handleAddTag} />
+                    </div>
+                    <div>
+                      <label className="label">Team Member:</label>
+                      <TeamMember addTeamMember={handleAddTeamMember} />
+                    </div>
+                    <div>
+                      <label className="label">Folder Template :</label>
+                      <AddFolderTemplate addFolderTemplate={handleAddFolderTemplate} />
+                    </div>
+                    <div>
+                      <button
+                        className="submit-btn col-6"
+                        onClick={() => {
+                          handleSubmit();
+                          handleFormStage("stage2");
+                        }}
+                      >
+                        Submit
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
+
+              {isCompanyEnabled && (
+                <div>
+                  {/* Company form */}
+                  <div className="individualInfo" style={{ padding: "15px" }}>
+                    <div>
+                      <div>
+                        <h3 style={{ fontSize: "14px", fontFamily: "sans-serif", fontWeight: "600", color: "gray" }}>Account Info</h3>
+                      </div>
+                      <div style={{ marginLeft: "90px", marginTop: "-20px", color: "blue" }}>
+                        <SlQuestion />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="label">Account Name:</label>
+                      <input className="col-12 input" type="text" name="name" placeholder="first name" onChange={handleAccountName} />
+                    </div>
+
+                    <div>
+                      <label className="label">Tags:</label>
+                      <Tag addTag={handleAddTag} />
+                    </div>
+                    <div>
+                      <label className="label">Team Member:</label>
+                      <TeamMember addTeamMember={handleAddTeamMember} />
+                    </div>
+                    <div>
+                      <label className="label">Folder Template :</label>
+                      <AddFolderTemplate addFolderTemplate={handleAddFolderTemplate} />
+                    </div>
+                    <div style={{ marginTop: "10px" }}>
+                      <h5>Company Adress</h5>
+                    </div>
+
+                    <div>
+                      <label className="label">Country:</label>
+                      <input className="col-12 input" type="text" name="name" placeholder="" onChange={(e) => SetCCountry(e.target.value)} />
+                    </div>
+                    <div>
+                      <label className="label">Street address::</label>
+                      <input className="col-12 input" type="text" name="name" placeholder="" onChange={(e) => SetCStreetAddress(e.target.value)} />
+                    </div>
+                    <div>
+                      <label className="label">State/Province:</label>
+                      <input className="col-12 input" type="text" name="name" placeholder="" onChange={(e) => SetCStateProvince(e.target.value)} />
+                    </div>
+                    <div>
+                      <label className="label">ZIP/Postal Code</label>
+                      <input className="col-12 input" type="text" name="name" placeholder="" onChange={(e) => SetCZipPostalCode(e.target.value)} />
+                    </div>
+
+                    <div>
+                      <button
+                        className="submit-btn col-6"
+                        onClick={() => {
+                          handleSubmit();
+                          handleFormStage("stage2");
+                        }}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <div>add contct</div>
           </>
         );
       case 3:
@@ -284,27 +366,35 @@ function CreateAccount({ handleAddAccount }) {
             {formSubmitted ? (
               <div>
                 {submittedContacts.map((contact, index) => (
-                  <div key={index}>
-                    <p>Contact {index + 1}:</p>
-                    <p>Name: {contact.fname}</p>
-                    <p>Email: {contact.email}</p>
-                    <button className="submit-btn col-6" style={{ marginLeft: "10px" }} onClick={() => handleRemoveSubmittedContact(index)}>
+                  <div className=" col-12" key={index}>
+                    <div style={{ marginLeft: "20px" }}>
+                      <h6>Contact {index + 1} :</h6>
+                      <h6>Name: {contact.fname}</h6>
+                      <h6>Email: {contact.email}</h6>
+                    </div>
+
+                    <button className="submit-btn col-6" style={{ marginLeft: "10px", width: "11%", hight: "5px", fontSize: "10px" }} onClick={() => handleRemoveSubmittedContact(index)}>
                       Remove
                     </button>
-                    <button className="submit-btn col-6" style={{ marginLeft: "10px" }} onClick={() => handleSendContact(index)}>
+                    <button className="submit-btn col-6" style={{ marginLeft: "10px", width: "8%", fontSize: "10px" }} onClick={() => handleSendContact(index)}>
                       Send
                     </button>
                   </div>
                 ))}
 
                 <div className=" col-12">
-                  <div className="addContact" style={{ margin: "20px" }}>
+                  <div className="addContact " style={{ margin: "20px" }}>
                     <div className=" col-1" style={{ color: "blue" }} onClick={() => setFormSubmitted(false)}>
                       <FaPlusCircle />
                     </div>
-                    <div className=" col-11" style={{ margin: "-2px" }}>
-                      Add New Contact
+                    <div className=" col-11" style={{ marginLeft: "2px" }}>
+                      <h5> Add New Contact</h5>
                     </div>
+                  </div>
+                  <div className="col-12">
+                    <button className="submit-btn col-12" style={{ marginLeft: "10px", width: "150px", marginBottom: "10px" }} onClick={createAddAccouunt}>
+                      Create Account
+                    </button>
                   </div>
                 </div>
               </div>
@@ -369,8 +459,8 @@ function CreateAccount({ handleAddAccount }) {
                         <div className=" col-12" style={{ padding: "0 10px 10px 10px" }}>
                           <label>Tags:</label>
                           {/* <Tag addTag={handleAddTag} /> */}
-                          <label htmlFor={`role${index}`}>Role:</label>
-                          <Tag value={contact.tag} onChange={(selectedOption) => handleRoleChange(index, selectedOption)} />
+
+                          <Tag addTag={handleAddTag} value={contact.tag} onChange={(selectedOption) => handleRoleChange(index, selectedOption)} />
                         </div>
                         <div className=" col-12" style={{ padding: "0 10px 0 10px" }}>
                           <h5>Phone Number</h5>
@@ -433,16 +523,19 @@ function CreateAccount({ handleAddAccount }) {
 
         <div className="accounttype_container col-12">
           <div className="sub-account col-6">
-            <div className="account_info" style={{ fontWeight: formStage === "stage1" ? "bold" : "normal" }}>
+            <div className=" col-4" style={{ fontWeight: formStage === "stage1" ? "bold" : "normal" }}>
               <input type="radio" id="account_info_radio" name="account_info_radio" checked={formStage === "stage1"} />
-              <label htmlFor="account_info_radio">Account info</label>
+              <label htmlFor="account_info_radio" style={{ marginLeft: "-30px" }}>
+                Account info
+              </label>
               {showAccountInfo && <span>1</span>}
             </div>
-            <div className="rotate-btn">{formStage === "stage1" ? <SlArrowRight /> : <SlArrowLeft />}</div>
-
-            <div className="company_info" style={{ fontWeight: formStage === "stage2" ? "bold" : "normal" }}>
-              <input type="radio" id="company_info_radio" name="company_info_radio" checked={formStage === "stage2"} />
-              <label htmlFor="company_info_radio">Contacts</label>
+            <div className="rotate-btn col-4">{formStage === "stage1" ? <SlArrowRight /> : <SlArrowLeft />}</div>
+            <div className=" col-4" style={{ fontWeight: formStage === "stage2" ? "bold" : "normal" }}>
+              <input type="radio" id="company_info_radio" name="company_info_radio" checked={formStage === "stage2"} style={{ width: "13px" }} />
+              <label htmlFor="company_info_radio" style={{ marginLeft: "-23px" }}>
+                Contacts
+              </label>
             </div>
           </div>
         </div>
@@ -450,10 +543,10 @@ function CreateAccount({ handleAddAccount }) {
 
       {renderCurrentStage()}
 
-      <div className="col-12">
+      {/* <div className="col-12">
         {currentStage > 1 && <button onClick={prevStage}>Previous</button>}
         {currentStage < 3 && <button onClick={nextStage}>Next</button>}
-      </div>
+      </div> */}
     </div>
   );
 }

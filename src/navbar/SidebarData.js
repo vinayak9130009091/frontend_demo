@@ -2,133 +2,101 @@ import { FiHome } from "react-icons/fi";
 import { FaChalkboard } from "react-icons/fa";
 import { LuFileSpreadsheet } from "react-icons/lu";
 import { BiFoodMenu } from "react-icons/bi";
+import { HiMiniSquares2X2 } from "react-icons/hi2";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { IoMdContact } from "react-icons/io";
+import { GoWorkflow } from "react-icons/go";
+import { RiBillFill } from "react-icons/ri";
+import { HiTemplate } from "react-icons/hi";
+import { IoSettingsSharp } from "react-icons/io5";
+import { IoMdPricetags } from "react-icons/io";
+import { FaLandmark } from "react-icons/fa";
+import { TiSpanner } from "react-icons/ti";
+import { MdInput } from "react-icons/md";
+import { RiBuilding2Fill } from "react-icons/ri";
+import { MdAccountBalanceWallet } from "react-icons/md";
+import { MdPermContactCalendar } from "react-icons/md";
 
 const SidebarItems = [
   {
-    title: "Home Work",
+    title: "Insights",
     path: "/",
-    icon: <FiHome />,
+    icon: <HiMiniSquares2X2 />,
   },
   {
-    title: "Notice",
+    title: "Inbox+",
     path: "/Card",
-    icon: <FaChalkboard />,
+    icon: <MdOutlineMailOutline />,
   },
   {
-    title: "Schedule", // Main menu item with submenus
-    icon: <LuFileSpreadsheet />,
+    title: "Clients", // Main menu item with submenus
+    icon: <IoMdContact />,
     subNavOpen: false,
     subNav: [
       {
-        title: "Prepration",
+        title: "Accounts",
         path: "/submenu1",
-        icon: <FiHome />,
+        icon: <MdAccountBalanceWallet />,
       },
       {
-        title: "School",
+        title: "Contacts",
         path: "/submenu2",
-        icon: <FiHome />,
-      },
-      {
-        title: "School",
-        path: "/submenu2",
-        icon: <FiHome />,
+        icon: <MdPermContactCalendar />,
       },
     ],
   },
   {
-    title: "Template", // Main menu item with submenus
-    icon: <LuFileSpreadsheet />,
+    title: "Workflow", // Main menu item with submenus
+    icon: <GoWorkflow />,
     subNavOpen: false,
     subNav: [
       {
         title: "Marketplace",
         path: "/marketplace",
-        icon: <FiHome />,
+        icon: <FaLandmark />,
       },
       {
         title: "Firmtemplates",
         path: "/firmtemplates",
-        icon: <FiHome />,
+        icon: <RiBuilding2Fill />,
       },
       {
         title: "Tags",
-        path: "/tags",
-        icon: <FiHome />,
+        path: "/newtag",
+        icon: <IoMdPricetags />,
       },
       {
         title: "Services",
-        path: "/services",
-        icon: <FiHome />,
+        path: "/tagtable",
+        icon: <TiSpanner />,
       },
       {
         title: "Customfields",
         path: "/customfields",
-        icon: <FiHome />,
+        icon: <MdInput />,
       },
     ],
   },
   {
-    title: "Exam",
+    title: "Documents",
     path: "/Card",
     icon: <BiFoodMenu />,
   },
-  // {
-  //   title: "Result",
-  //   path: "/Card",
-  //   icon: "bx-calendar-check",
-  // },
-  // {
-  //   title: "Competetion",
-  //   path: "/Card",
-  //   icon: "bx-trophy",
-  // },
-  // {
-  //   title: "Messages",
-  //   path: "/Card",
-  //   icon: "bx-message-rounded",
-  // },
-  // {
-  //   title: "Contact Us",
-  //   path: "/Card",
-  //   icon: "bx-user",
-  // },
-
-  // {
-  //   title: "Schedule", // Main menu item with submenus
-  //   icon: "bx-spreadsheet",
-  //   subNavOpen: false,
-  //   subNav: [
-  //     {
-  //       title: "Prepration",
-  //       path: "/submenu1",
-  //       icon: "bx-home-alt",
-  //     },
-  //     {
-  //       title: "School",
-  //       path: "/submenu2",
-  //       icon: "bx-home-alt",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Schedule", // Main menu item with submenus
-  //   icon: "bx-spreadsheet",
-  //   subNavOpen: false,
-  //   subNav: [
-  //     {
-  //       title: "Prepration",
-  //       path: "/submenu1",
-  //       icon: "bx-home-alt",
-  //     },
-  //     {
-  //       title: "School",
-  //       path: "/submenu2",
-  //       icon: "bx-home-alt",
-  //     },
-  //   ],
-  // },
-  // Other menu items...
+  {
+    title: "Billing",
+    path: "/Card",
+    icon: <RiBillFill />,
+  },
+  {
+    title: "Templates",
+    path: "/Card",
+    icon: <HiTemplate />,
+  },
+  {
+    title: "Settings",
+    path: "/Card",
+    icon: <IoSettingsSharp />,
+  },
 ];
 
 export default SidebarItems;

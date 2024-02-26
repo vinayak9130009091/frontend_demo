@@ -63,7 +63,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-const Tag = ({ value, onChange }) => {
+const Tag = ({ addTag, value, onChange }) => {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const animatedComponents = makeAnimated();
@@ -80,6 +80,10 @@ const Tag = ({ value, onChange }) => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+  const handleChange = (selectedOption) => {
+    //console.log("handledChange", selectedOption);
+    addTag(selectedOption);
   };
 
   const options = tags.map((tag) => ({
@@ -154,7 +158,7 @@ const Tag = ({ value, onChange }) => {
         components={animatedComponents}
         isMulti // Enable multi-select
         value={value}
-        onChange={onChange}
+        onChange={(onChange, handleChange)}
         placeholder="Select tags..."
         isSearchable // Enable search
         styles={customStyles}

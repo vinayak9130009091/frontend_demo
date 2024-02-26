@@ -1,9 +1,9 @@
 import React from "react";
 import Select from "react-select";
 
-function AddFolderTemplate({addFolderTemplate}) {
+function AddFolderTemplate({ addFolderTemplate }) {
   const options = [
-    { value: "folderIndividual", label: "Folder Individual Accoun", color: "#808080" },
+    { value: "folderIndividual", label: "Folder Individual Account", color: "#808080" },
     { value: "folderCompany", label: "folderCompany", color: "#808080" },
     { value: "folderRgualr", label: "folderRgualr", color: "#808080" },
     { value: "folderAboveAverage", label: "folderAboveAverage", color: "#808080" },
@@ -48,8 +48,9 @@ function AddFolderTemplate({addFolderTemplate}) {
       };
     },
   };
+  // defaultValue={options[0]}
 
-  return <Select options={options} onChange={handleChange} defaultValue={options[0]} isMulti styles={colorStyles} />;
+  return <Select options={options} onChange={handleChange} isMulti styles={colorStyles} />;
 }
 
 export default AddFolderTemplate;

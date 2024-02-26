@@ -1,4 +1,4 @@
-.contact-container {
+/* .contact-container {
   position: absolute;
   top: 0;
   right: -66.66%;
@@ -35,6 +35,14 @@
   color: rgb(33, 31, 31);
   font-size: 15px;
 }
+
+
+//!input css */
+input[type="number"].no-spinner::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .submit-btn {
   padding: 8px;
   margin-top: 15px;
@@ -44,5 +52,71 @@
   background: #007bff;
   width: 20%;
 }
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-/* //!input css */
+.contact-container {
+  position: absolute;
+  top: 0;
+  right: -66.66%;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: right 0.5s ease-in-out;
+  padding: 15px;
+}
+
+.contact-open {
+  right: 0;
+}
+
+.contact-header {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  background: rgb(243, 243, 243);
+}
+
+.contact-header .contact_title {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: sans-serif;
+  width: 85%;
+  float: left;
+  cursor: pointer;
+}
+
+.contact-header .contactheader-button {
+  background: none;
+  color: rgb(58, 145, 245);
+  border: none;
+  width: 15%;
+  float: left;
+  cursor: pointer;
+}
+
+/* //!create and cancel button css */
+
+.custom-button {
+  background-color: transparent;
+  border: 1px solid rgb(58, 145, 245);
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: rgb(58, 145, 245);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-button:hover {
+  background-color: rgb(58, 145, 245);
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .button-container {
+    flex-direction: column;
+  }
+}

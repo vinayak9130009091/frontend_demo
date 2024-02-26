@@ -18,6 +18,7 @@ import { HiBars3 } from "react-icons/hi2";
 
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
+import Todo from "../component/Todo";
 
 function Sidebar() {
   const [mainSidebar, setMainSidebar] = useState(false);
@@ -25,7 +26,7 @@ function Sidebar() {
   const [newsidebar, setNewSidebar] = useState(false);
   const [searchbar, setSearchbar] = useState(false);
   const [contactForm, setContactForm] = useState(false);
-  const [accountform, setAccountForm] = useState(true);
+  const [accountform, setAccountForm] = useState(false);
 
   const handleSidebar = () => {
     setMainSidebar(!mainSidebar);
@@ -144,6 +145,9 @@ function Sidebar() {
           {/* //todo Card view  */}
           <CardView />
           {/* //todo Card view  */}
+          <div className="table-view col-12" style={{ marginTop: "50px", padding: "5px" }}>
+            <Todo />
+          </div>
         </div>
 
         {/* onclick new button new sidebar is open */}
