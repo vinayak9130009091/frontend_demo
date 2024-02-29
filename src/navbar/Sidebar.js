@@ -147,7 +147,7 @@ function Sidebar() {
                 <IoSearch className="bicon" style={{ marginTop: "4px" }} />
               </button>
             </div>
-          </div> */}
+          </div> 
         {/* //todo Card view  */}
         {/* <CardView /> */}
         {/* //todo Card view  */}

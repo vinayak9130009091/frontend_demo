@@ -10,6 +10,10 @@ import { IoSearch } from "react-icons/io5";
 import { HiBars3 } from "react-icons/hi2";
 import Sidebar from "../navbar/Sidebar";
 import Adminlogin from "./AdminLogin";
+import NewSidebar from "../navbar/NewSidebar";
+import SearchBar from "../navbar/SearchBar";
+import CreateContact from "../pages/Contact";
+import CreateAccount from "../pages/CreateAccount";
 
 const Layout = () => {
   const [mainSidebar, setMainSidebar] = useState(false);
@@ -84,7 +88,6 @@ const Layout = () => {
   return (
     <>
       <div>
-        <button onClick={handleLogout}>Logout</button>
         {loggedIn ? (
           // Render Form 1
           <div className="row">
@@ -147,6 +150,40 @@ const Layout = () => {
             </div>
 
             <div className={` ${sidebarOpen ? "col-10 menu2" : "col-11 menu2close"} }`}>
+              <div className="headers col-12" style={{ marginLeft: "15px", height: "40px" }}>
+                <div className="btns-grp col-12 ">
+                  <button className="nbtn col-2" onClick={handleNewSidebar}>
+                    New
+                  </button>
+                  <button className="sbtn col-2" onClick={handleSearchbar}>
+                    <IoSearch className="bicon" style={{ marginTop: "4px" }} />
+                  </button>
+                  <button className="nbtn col-8" onClick={handleLogout} style={{ width: "60px" }}>
+                    Logout
+                  </button>
+                </div>
+              </div>
+              {/* onclick new button new sidebar is open */}
+              <div className={`sidebar3 col-2  ${newsidebar ? "open" : ""}`}>
+                <NewSidebar account={handleAddAccount} formclose={handleFormClose} contact={handleAddNewCompanyClick} />
+              </div>
+              {/* onclick new button new sidebar is open */}
+
+              {/*new search bar  */}
+              <div className={`search-side col-2 ${searchbar ? "open" : ""}`}>
+                <SearchBar searchbar formclose={handleSearchbar} />
+              </div>
+              {/*new search bar  */}
+
+              {/* contact form */}
+              <div className={`contact-container col-4  ${contactForm ? "contact-open" : ""}`}>
+                <CreateContact handleContactClose={handleContactClose} />
+              </div>
+
+              {/* Account info */}
+              <div className={`account-container col-4  ${accountform ? "account-open" : ""}`}>
+                <CreateAccount handleAddAccount={handleAddAccount} />
+              </div>
               <Outlet />
             </div>
           </div>

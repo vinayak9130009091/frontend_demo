@@ -26,7 +26,7 @@ const SidebarItems = [
   },
   {
     title: "Inbox+",
-    path: "/Card",
+    path: "/TagTable",
     icon: <MdOutlineMailOutline />,
   },
   {

@@ -19,24 +19,12 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Account />} />
           <Route path="/tags" element={<Tagcreate />} />
+          <Route path="/tagtable" element={<TagTable />} />
 
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
-    // <BrowserRouter>
-    //   <Routes>
-    //<Route path="/adminlogin" element={<AdminLogin />} />
-    //     <Route path="/" element={<Sidebar />}>
-    //       <Route index element={<Sidebar />} />
-    //       <Route path="/tags" element={<Tagcreate />} />
-    //       <Route path="/newtag" element={<NewTag />} />
-    //       <Route path="/tagtable" element={<TagTable />} />
-    //       <Route path="/account" element={<Account />} />
-    //       <Route path="*" element={<NoPage />} />
-    //     </Route>
-    //   </Routes>
-    // </BrowserRouter>
   );
 }
 
