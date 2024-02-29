@@ -4,6 +4,7 @@ import logo from "../img/logo.svg";
 import { FaAngleLeft } from "react-icons/fa";
 import "boxicons";
 import "boxicons/css/boxicons.min.css";
+import { Outlet, Link } from "react-router-dom";
 
 import NewSidebar from "./NewSidebar";
 import CardView from "../pages/CardView";
@@ -111,12 +112,17 @@ function Sidebar() {
                         <ul className="submenu d-block">
                           {item.subNav.map((subItem, subIndex) => (
                             <li className="subnav-link" key={subIndex}>
-                              <a href={subItem.path}>
+                              <Link to={subItem.path}>Home</Link>
+                              <i className="icon " onClick={toggleSidebar}>
+                                {subItem.icon}
+                              </i>
+                              <span className="text nav-text">{subItem.title}</span>
+                              {/* <a href={subItem.path}>
                                 <i className="icon " onClick={toggleSidebar}>
                                   {subItem.icon}
                                 </i>
                                 <span className="text nav-text">{subItem.title}</span>
-                              </a>
+                              </a> */}
                             </li>
                           ))}
                         </ul>
@@ -131,8 +137,8 @@ function Sidebar() {
           </div>
         </div>
 
-        <div className={` ${sidebarOpen ? "col-10 menu2" : "col-11 menu2close"} }`}>
-          <div className="headers col-12" style={{ marginLeft: "15px", height: "40px" }}>
+        {/* <div className={` ${sidebarOpen ? "col-10 menu2" : "col-11 menu2close"} }`}> */}
+        {/* <div className="headers col-12" style={{ marginLeft: "15px", height: "40px" }}>
             <div className="btns-grp ">
               <button className="nbtn col-2" onClick={handleNewSidebar}>
                 New
@@ -141,37 +147,37 @@ function Sidebar() {
                 <IoSearch className="bicon" style={{ marginTop: "4px" }} />
               </button>
             </div>
-          </div>
-          {/* //todo Card view  */}
-          <CardView />
-          {/* //todo Card view  */}
-          <div className="table-view col-12" style={{ marginTop: "50px", padding: "5px" }}>
+          </div> */}
+        {/* //todo Card view  */}
+        {/* <CardView /> */}
+        {/* //todo Card view  */}
+        {/* <div className="table-view col-12" style={{ marginTop: "50px", padding: "5px" }}>
             <Todo />
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
 
         {/* onclick new button new sidebar is open */}
-        <div className={`sidebar3 col-2  ${newsidebar ? "open" : ""}`}>
+        {/* <div className={`sidebar3 col-2  ${newsidebar ? "open" : ""}`}>
           <NewSidebar account={handleAddAccount} formclose={handleFormClose} contact={handleAddNewCompanyClick} />
-        </div>
+        </div> */}
         {/* onclick new button new sidebar is open */}
 
         {/*new search bar  */}
-        <div className={`search-side col-2 ${searchbar ? "open" : ""}`}>
+        {/* <div className={`search-side col-2 ${searchbar ? "open" : ""}`}>
           <SearchBar searchbar formclose={handleSearchbar} />
-        </div>
+        </div> */}
         {/*new search bar  */}
 
         {/* contact form */}
-        <div className={`contact-container col-4  ${contactForm ? "contact-open" : ""}`}>
-          {/* //handleContactClose */}
+        {/* <div className={`contact-container col-4  ${contactForm ? "contact-open" : ""}`}>
+         
           <CreateContact handleContactClose={handleContactClose} />
-        </div>
+        </div> */}
 
         {/* Account info */}
-        <div className={`account-container col-4  ${accountform ? "account-open" : ""}`}>
+        {/* <div className={`account-container col-4  ${accountform ? "account-open" : ""}`}>
           <CreateAccount handleAddAccount={handleAddAccount} />
-        </div>
+        </div> */}
       </div>
     </>
   );

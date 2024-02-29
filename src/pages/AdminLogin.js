@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 import { FaFacebook, FaWeebly, FaInstagramSquare, FaLinkedin, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function SuperAdminLogin() {
+export default function SuperAdminLogin({ toggleLogin }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -101,7 +101,8 @@ export default function SuperAdminLogin() {
           toast.success("You are sucessfully loged in", { position: "top-right" });
 
           setInpval({ ...inpval, email: "", password: "" });
-          navigate("/adminDashboard");
+
+          toggleLogin();
         })
         .catch((error) => {
           console.log(error);

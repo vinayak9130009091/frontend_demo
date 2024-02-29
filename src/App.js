@@ -2,21 +2,41 @@ import Sidebar from "./navbar/Sidebar";
 import Tagcreate from "./pages/Tagscreate";
 import NewTag from "./pages/NewTag";
 import TagTable from "./pages/TagTable";
-import AdminLogin from "./pages/AdminLogin";
+import Account from "./pages/Account";
+import "./App.css";
+import Header from "../src/component/Header";
 import "boxicons";
-import { Routes, Route } from "react-router-dom";
+import Layout from "./pages/Layout";
+import NoPage from "./pages/NoPage";
+import AdminLogin from "./pages/AdminLogin";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AdminLogin />} />
-        <Route path="/adminDashboard" element={<Sidebar />} />
-        <Route path="/tags" element={<Tagcreate />} />
-        <Route path="/newtag" element={<NewTag />} />
-        <Route path="/tagtable" element={<TagTable />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Account />} />
+          <Route path="/tags" element={<Tagcreate />} />
+
+          <Route path="*" element={<NoPage />} />
+        </Route>
       </Routes>
-    </div>
+    </BrowserRouter>
+    // <BrowserRouter>
+    //   <Routes>
+    //<Route path="/adminlogin" element={<AdminLogin />} />
+    //     <Route path="/" element={<Sidebar />}>
+    //       <Route index element={<Sidebar />} />
+    //       <Route path="/tags" element={<Tagcreate />} />
+    //       <Route path="/newtag" element={<NewTag />} />
+    //       <Route path="/tagtable" element={<TagTable />} />
+    //       <Route path="/account" element={<Account />} />
+    //       <Route path="*" element={<NoPage />} />
+    //     </Route>
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 

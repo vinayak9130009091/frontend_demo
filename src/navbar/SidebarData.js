@@ -16,11 +16,12 @@ import { MdInput } from "react-icons/md";
 import { RiBuilding2Fill } from "react-icons/ri";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { MdPermContactCalendar } from "react-icons/md";
+import { AdminLogin } from "../pages/AdminLogin";
 
 const SidebarItems = [
   {
     title: "Insights",
-    path: "/",
+    path: "/tags",
     icon: <HiMiniSquares2X2 />,
   },
   {
