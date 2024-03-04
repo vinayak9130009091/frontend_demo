@@ -10,6 +10,7 @@ import { IoSearch } from "react-icons/io5";
 import { HiBars3 } from "react-icons/hi2";
 import Sidebar from "../navbar/Sidebar";
 import Adminlogin from "./AdminLogin";
+import AdminSignup from "./AdminSignup";
 import NewSidebar from "../navbar/NewSidebar";
 import SearchBar from "../navbar/SearchBar";
 import CreateContact from "../pages/Contact";
@@ -190,8 +191,8 @@ const Layout = () => {
         ) : (
           // Render Form 2
 
-          <div className={` ${sidebarOpen ? "col-12 menu2" : "col-12 menu2close"} }`}>
-            <Adminlogin toggleLogin={handleLogin} />
+          <div className={` ${sidebarOpen ? "col-12 " : "col-12 "} }`}>
+            <AdminSignup toggleLogin={handleLogin} />
           </div>
         )}
       </div>

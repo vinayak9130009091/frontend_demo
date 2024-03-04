@@ -9,6 +9,7 @@ import "boxicons";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import AdminLogin from "./pages/AdminLogin";
+import AdminSignup from "./pages/AdminSignup";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -20,6 +21,7 @@ function App() {
           <Route index element={<Account />} />
           <Route path="/tags" element={<Tagcreate />} />
           <Route path="/tagtable" element={<TagTable />} />
+          <Route path="/adminSignup" element={<AdminSignup />} />
 
           <Route path="*" element={<NoPage />} />
         </Route>
