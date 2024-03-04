@@ -300,7 +300,6 @@
   text-align: left;
 }
 
-
 .case6 button {
   /* background-color: #4caf50; */
   background-color: rgb(86, 155, 235);
@@ -317,6 +316,72 @@
 }
 @media screen and (max-width: 480px) {
   .case4 .container {
+    width: 400px;
+    padding: 20px;
+    /* background-color: #fff; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    border-radius: 30px;
+    text-align: center;
+  }
+}
+
+/* //todo==============================case4================= */
+.case8 {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* background-color: #f4f4f4; */
+}
+.case8 .container {
+  width: 500px;
+  padding: 20px;
+  /* background-color: #fff; */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  border-radius: 30px;
+  text-align: center;
+}
+.case8 label {
+  position: relative;
+  display: block;
+  text-align: left;
+  font-size: small;
+  font-weight: 500;
+  color: gray;
+}
+.case8 input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.case8 select {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.case8 button {
+  /* background-color: #4caf50; */
+  background-color: rgb(86, 155, 235);
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 20px;
+}
+.case8 button:hover {
+  background-color: rgb(9, 102, 208);
+}
+@media screen and (max-width: 480px) {
+  .case8 .container {
     width: 400px;
     padding: 20px;
     /* background-color: #fff; */

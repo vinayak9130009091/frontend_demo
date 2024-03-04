@@ -84,7 +84,7 @@ const SignUp = () => {
   //todo ========    #page control  logic   No1 =======
 
   //!chang state for testing
-  const [currentStep, setCurrentStep] = useState(6);
+  const [currentStep, setCurrentStep] = useState(2);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -704,10 +704,34 @@ const SignUp = () => {
   //============================
 
   //case 8 ============================
+  const [currencies, setCurrencies] = useState("");
   const [currency, setCurrency] = useState("");
   const [language, setLanguage] = useState("");
   const [url, setUrl] = useState("");
 
+  const [selectedCurrency, setSelectedCurrency] = useState("");
+
+  useEffect(() => {
+    const fetchCurrencies = async () => {
+      try {
+        const response = await axios.get("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
+        const currencyOptions = Object.keys(response.data).map((currency) => ({
+          value: currency,
+          label: response.data[currency].toUpperCase(),
+        }));
+
+        setCurrencies(currencyOptions);
+      } catch (error) {
+        console.error("Error fetching currencies:", error);
+      }
+    };
+
+    fetchCurrencies();
+  }, []);
+
+  const handleCurrencyChange = (selectedOption) => {
+    setSelectedCurrency(selectedOption);
+  };
   const handleUrlChange = (e) => {
     setUrl(e.target.value);
   };
@@ -719,11 +743,11 @@ const SignUp = () => {
     console.log("Combined value:", combinedValue);
   };
 
-  const handleCurrencyChange = (e) => {
-    const selectedCurrency = e.target.value;
-    setCurrency(selectedCurrency);
-    console.log("Selected currency:", selectedCurrency);
-  };
+  // const handleCurrencyChange = (e) => {
+  //   const selectedCurrency = e.target.value;
+  //   setCurrency(selectedCurrency);
+  //   console.log("Selected currency:", selectedCurrency);
+  // };
 
   const handleLanguageChange = (e) => {
     const selectedLanguage = e.target.value;
@@ -741,6 +765,29 @@ const SignUp = () => {
   //   console.log(url);
   //   // You can send combinedData to backend here
   // };
+  const [languages, setLanguages] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://query.wikidata.org/sparql?query=SELECT%20%3Flanguage%20%3FlanguageLabel%20WHERE%20%7B%0A%20%20%3Flanguage%20wdt%3AP31%20wd%3AQ34770.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%0A%20%20%20%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%0A%20%20%7D%0A%7D&format=json");
+        if (!response.ok) {
+          throw new Error("Failed to fetch languages");
+        }
+        const data = await response.json();
+        const languages = data.results.bindings.map((binding) => ({
+          value: binding.language.value.split("/").pop(),
+          label: binding.languageLabel.value.toUpperCase(),
+        }));
+        setLanguages(languages);
+      } catch (error) {
+        console.error("Error fetching languages:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   //?validation
   const submiturl = async (e) => {
@@ -1017,7 +1064,7 @@ const SignUp = () => {
                         value={otp}
                         onChange={setOtp}
                         numInputs={6}
-                        renderSeparator={<span>-</span>}
+                      
                         renderInput={(props) => (
                           <input
                             {...props}
@@ -1026,6 +1073,7 @@ const SignUp = () => {
                               height: "100px", // Adjust as needed
                               fontSize: "42px", // Adjust as needed
                               fontFamily: "Arial, sans-serif", // Replace with your desired font
+                              marginRight:"10px "
 
                               // Add any other styling properties as needed
                             }}
@@ -1363,31 +1411,18 @@ const SignUp = () => {
       case 8:
         return (
           <>
-            <div className="header">
-              <div className="logo">
-                <img src={logo} alt="" />
-                <b>Microtech Solutions</b>
+            <div className="col-12" style={{ display: "flex" }}>
+              <div className="col-4" style={{ margin: "20px" }}>
+                <img style={{ width: "30px" }} src={logo} alt="" />
+                <b>PMS Solutions</b>
               </div>
-              <div className="setting-path">
-                <p className="number1">1</p>
-                <p>Email</p>
-                <p className="number2">2</p>
-                <p>Information</p>
-                <p className="number3">3</p>
-                <p>Settings</p>
-                <p className="number4">4</p>
-                <p>Book a session</p>
-              </div>
-              <div className="header-info">
-                <button className="login-btn" onClick={LoginButton}>
-                  Login
-                </button>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA-bIT8cA6U4J_rVPIp6RXAGuzlO3X5KWSBQ&usqp=CAU" alt="" />
-                <h3>EN</h3>
+              <div className="path col-12" style={{ marginRight: "200px" }}>
+                <MultiStage steps={totalSteps} currentStepForm={2} stageNames={stageNames} />
               </div>
             </div>
-            <div className="setting-container">
-              <div className="firm-setting">
+
+            <div className=" col-12 case8">
+              <div className="container">
                 <div className="firm">
                   <h2>Firm Settings</h2>
 
@@ -1418,36 +1453,17 @@ const SignUp = () => {
                       <label>You cannot Change it later</label>
                       <br />
 
-                      <select className="select" value={currency} onChange={(e) => setCurrency(e.target.value)}>
-                        <option>Select Currency</option>
-                        <option>USD</option>
-                        <option>AUD</option>
-                        <option>Euro</option>
-                        <option>NZD</option>
-                        <option>CAD</option>
-                        <option>GBP</option>
-                        <option>CHF</option>
-                        <option>BRL</option>
-                        <option>SEK</option>
-                        <option>NOK</option>
-                        <option>DKK</option>
-                        <option>JPY</option>
-                      </select>
+                      <div>
+                        <label>Select Currency: </label>
+                        <Select value={selectedCurrency} onChange={handleCurrencyChange} options={currencies} placeholder="Select a currency" />
+                      </div>
                     </div>
-                    <div className="lang">
-                      <label>Default Language</label>
-                      <br />
-                      <select className="select" value={language} onChange={(e) => setLanguage(e.target.value)}>
-                        <option>Select Language</option>
-                        <option>English(British)</option>
-                        <option>Deutsch</option>
-                        <option>Ztaliano</option>
-                        <option>Nederlands</option>
-                        <option>suomi</option>
-                        <option>Dansk</option>
-                        <option>Sevenska</option>
-                        <option>Norsk</option>
-                      </select>
+                    <br />
+                    <div>
+                      <label>Select Language: </label>
+                      <Select value={selectedLanguage} onChange={handleLanguageChange} options={languages} placeholder="Select a language" />
+
+                      {selectedLanguage && <p>You selected: {selectedLanguage.label}</p>}
                     </div>
                   </div>
                   {/* submiturl */}
